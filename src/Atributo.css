@@ -1,0 +1,10 @@
+.status{
+    .acoes{
+        display: flex;
+        flex-direction: column;
+    }
+    .inativo{
+        filter: grayscale(100%);
+        opacity: 0.4;
+    }
+}

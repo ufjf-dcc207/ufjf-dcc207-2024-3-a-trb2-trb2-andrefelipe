@@ -1,0 +1,93 @@
+/* Estilo geral da página */
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+    background-image: url('./assets/fundo.jpg');
+    background-size: cover;
+    background-position: center;
+    font-family: 'Press Start 2P', cursive; /* Fonte estilo pixel */
+}
+
+/* Container principal */
+.steve {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    padding: 20px; 
+}
+
+/* Emoji do Steve */
+.situacao {
+    font-size: 4em;
+    margin-bottom: 10px;
+}
+
+/* Barra de status (Saúde, Comida, Poção) */
+.status {
+    display: flex;
+    gap: 10px;
+}
+
+/* Botões de ação */
+.acoes {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.acoes button {
+    width: 150px;
+    height: 40px;
+    margin: 5px;
+    border: 2px solid black;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 3px 3px 0px black;
+    font-family: 'Press Start 2P', cursive;
+}
+
+.acoes button:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+}
+
+/* Estilização dos Inventários */
+.inventario, .inventario2, .inventario3 {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    margin-top: 10px;
+    padding: 5px;
+    background-color: #ad9d9d;
+    border: 4px solid #5c5c5c;
+    border-radius: 5px;
+}
+
+/* Slots do inventário */
+.slot {
+    width: 50px;
+    height: 50px;
+    background-color: #8b8b8b;
+    border: 3px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Ícones dentro do slot */
+.slot img {
+    width: 80%;
+    height: auto;
+}

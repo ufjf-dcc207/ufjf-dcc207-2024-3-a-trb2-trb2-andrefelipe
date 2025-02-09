@@ -1,14 +1,11 @@
-import { useState } from 'react'
-import './App.css'
+import { useState } from "react";
+import Steve from "./Steve.tsx";
+import "./App.css";
 
-function App() {
-  const [count, setCount] = useState(0)
-
+export default function App() {
   return (
-    <>
-      
-    </>
-  )
+    <div className="app">
+      <Steve />
+    </div>
+  );
 }
-
-export default App
