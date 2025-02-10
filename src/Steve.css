@@ -23,14 +23,15 @@ body {
 
 /* Emoji do Steve */
 .situacao {
-    font-size: 4em;
+    font-size: 6.5em;
     margin-bottom: 10px;
 }
 
-/* Barra de status (Saúde, Comida, Poção) */
+/* Barra de status (Saúde, Comida) */
 .status {
     display: flex;
-    gap: 10px;
+    gap: 20px;
+    font-size: 1.3em;
 }
 
 /* Botões de ação */
@@ -57,9 +58,10 @@ body {
     font-family: 'Press Start 2P', cursive;
 }
 
-.acoes button:hover {
-    background-color: #45a049;
-    transform: scale(1.05);
+/* Remove os efeitos visuais ao clicar nos botões */
+.acoes button:active {
+    transform: none;
+    background-color: #4CAF50;
 }
 
 /* Estilização dos Inventários */
