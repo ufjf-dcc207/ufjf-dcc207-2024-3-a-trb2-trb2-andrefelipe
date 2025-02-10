@@ -31,7 +31,7 @@ body {
 .status {
     display: flex;
     gap: 20px;
-    font-size: 1.3em;
+    font-size: 1.5em;
 }
 
 /* Botões de ação */

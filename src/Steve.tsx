@@ -1,16 +1,7 @@
 import { useState } from "react";
 import Atributo from "./Atributo";
 import "./Steve.css";
-
-const STEVES = new Map<string, string>([
-  ["happy", "😀"],
-  ["sick", "🤢"],
-  ["dead", "💀"],
-]);
-
-const IMAGENS1 = ["/assets/escudo.png", "/assets/escudo.png", "/assets/escudo.png", "/assets/escudo.png"];
-const IMAGENS2 = ["/assets/bola.png", "/assets/escudo.png", "/assets/peitoral.png", "/assets/espada.png", "/assets/maca.png"];
-const IMAGENS3 = ["/assets/escudo.png", "/assets/peitoral.png", "/assets/espada.png", "/assets/maca.png", "/assets/escudo.png"]; // slot 3, com 5 itens
+import { STEVES, IMAGENS1, IMAGENS2} from "./isol"; 
 
 function Steve() {
   const [situacao, setSituacao] = useState("happy");
@@ -19,7 +10,6 @@ function Steve() {
   const [escudo, setEscudo] = useState(0);
   const [armadura, setArmadura] = useState([false, false, false, false]);
   const [totem, setTotem] = useState(false);
-
 
   function onAlimentar() {
     setComida((prevComida) => {
@@ -38,7 +28,7 @@ function Steve() {
 
         if (novaSaude === 0 && totem) {
           setTotem(false);
-          setSituacao("happy"); 
+          setSituacao("happy");
           return 5;
         }
 
@@ -66,18 +56,17 @@ function Steve() {
     setTotem((prev) => !prev);
   }
 
- 
-
   return (
     <div className="steve">
-      <div className="situacao">{STEVES.get(situacao) || "🫥"}</div>
+      <div className="situacao">
+        <img src={STEVES.get(situacao) || "/assets/default.png"} alt="Situação" />
+      </div>
 
       <div className="status">
-        <Atributo emoji="❤️" valor={saude}/>
+        <Atributo emoji="❤️" valor={saude} />
         <Atributo emoji="🍖" valor={comida} />
         <Atributo emoji2="🛡️" valor={escudo} />
         <Atributo emoji3={totem ? "🟠" : ""} valor={1} />
-       
       </div>
 
       <div className="acoes">
@@ -87,23 +76,27 @@ function Steve() {
 
       <div className="inventario">
         {IMAGENS1.map((img, i) => (
-          <div key={i} className={`slot ${armadura[i] ? "ativo" : ""}`} onClick={() => onArmaduraClick(i)}>
-            <img src={img} />
+          <div
+            key={i}
+            className={`slot ${armadura[i] ? "ativo" : ""}`}
+            onClick={() => onArmaduraClick(i)}
+          >
+            <img src={img} alt={`Item ${i + 1}`} />
           </div>
         ))}
       </div>
 
       <div className="inventario2">
         {IMAGENS2.map((img, i) => (
-          <div key={i} className={`slot ${i === 0 && totem ? "ativo" : ""}`} onClick={i === 0 ? onTotemClick : undefined}>
-            <img src={img} />
+          <div
+            key={i}
+            className={`slot ${i === 0 && totem ? "ativo" : ""}`}
+            onClick={i === 0 ? onTotemClick : undefined}
+          >
+            <img src={img} alt={`Item ${i + 1}`} />
           </div>
         ))}
       </div>
-
-      
-
-      
     </div>
   );
 }
