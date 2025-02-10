@@ -1,20 +1,26 @@
 // isol.ts
+import download1 from "./assets/download.jpeg"
+import esqueleto from "./assets/esqueleto.jpeg"
+import download2 from "./assets/download.png"
+import peitoral from "./assets/peitoral.png"
+import calca from "./assets/calca.png"
+import bota from "./assets/bota.png"
+import totem from "./assets/totem.png"
 
 export const STEVES = new Map<string, string>([
-    ["happy", "./src/assets/download.jpeg"],
+    ["happy", download1],
   
-    ["dead", "./src/assets/esqueleto.jpeg"],
+    ["dead",  esqueleto],
   ]);
   
   export const IMAGENS1 = [
-    "./src/assets/download.png",
-    "./src/assets/peitoral.png",
-    "./src/assets/calca.png",
-    "./src/assets/bota.png",
-  ];
+    download2,
+    peitoral,
+    calca,
+    bota
+  ]
   
   export const IMAGENS2 = [
-    "./src/assets/totem.png",
+    totem
   ];
   
- 
