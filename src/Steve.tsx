@@ -8,23 +8,23 @@ const STEVES = new Map<string, string>([
   ["dead", "💀"],
 ]);
 
-// Caminhos das imagens para o inventário
 const IMAGENS1 = ["/assets/escudo.png", "/assets/escudo.png", "/assets/escudo.png", "/assets/escudo.png"];
-const IMAGENS2 = ["/assets/maca.png", "/assets/escudo.png", "/assets/peitoral.png", "/assets/espada.png", "/assets/maca.png"];
+const IMAGENS2 = ["/assets/bola.png", "/assets/escudo.png", "/assets/peitoral.png", "/assets/espada.png", "/assets/maca.png"];
 const IMAGENS3 = ["/assets/escudo.png", "/assets/peitoral.png", "/assets/espada.png", "/assets/maca.png", "/assets/escudo.png"];
 
 function Steve() {
   const [situacao, setSituacao] = useState("happy");
-  const [saude, setSaude] = useState(3); 
-  const [comida, setComida] = useState(3); 
-  const [escudo, setEscudo] = useState(0); 
-  const [armadura, setArmadura] = useState([false, false, false, false]); 
+  const [saude, setSaude] = useState(3);
+  const [comida, setComida] = useState(3);
+  const [escudo, setEscudo] = useState(0);
+  const [armadura, setArmadura] = useState([false, false, false, false]);
+  const [bolaLaranja, setBolaLaranja] = useState(false); 
 
   function onAlimentar() {
     setComida((prevComida) => {
       const newComida = Math.min(prevComida + 1, 5);
       if (newComida === 5) {
-        setSaude(5); 
+        setSaude(5);
       }
       return newComida;
     });
@@ -32,45 +32,48 @@ function Steve() {
 
   function onExplorar() {
     if (comida === 0) {
-      setSaude((prevSaude) => Math.max(0, prevSaude - 1));
-    } else {
-      // Se houver comida, a saúde não diminui
-      setSaude((prevSaude) => Math.min(5, prevSaude)); 
+      setSaude((prevSaude) => {
+        const novaSaude = Math.max(0, prevSaude - 1);
+
+        if (novaSaude === 0 && bolaLaranja) {
+          setBolaLaranja(false); 
+          setSituacao("happy"); // ✅ Steve volta a ficar "happy" ao reviver
+          return 5; 
+        }
+
+        return novaSaude;
+      });
     }
+
     setComida((prevComida) => Math.max(0, prevComida - 1));
 
-    
     if (saude === 0) {
       setSituacao("dead");
     }
   }
 
- // Função para lidar com o clique no item do inventário de armadura (escudo)
-function onArmaduraClick(index: number) {
-  setArmadura((prevArmadura) => {
-    // Cria uma cópia do estado atual de armadura
-    const newArmadura = [...prevArmadura];
+  function onArmaduraClick(index: number) {
+    setArmadura((prevArmadura) => {
+      const newArmadura = [...prevArmadura];
+      newArmadura[index] = !newArmadura[index];
+      setEscudo(newArmadura.filter((item) => item).length);
+      return newArmadura;
+    });
+  }
 
-    // Alterna entre true e false ao clicar
-    newArmadura[index] = !newArmadura[index];
-
-    // Atualiza o número de escudos com base nos itens ativos
-    setEscudo(newArmadura.filter((item) => item).length);
-
-    
-    return newArmadura;
-  });
-}
-
+  function onBolaLaranjaClick() {
+    setBolaLaranja((prev) => !prev);
+  }
 
   return (
     <div className="steve">
       <div className="situacao">{STEVES.get(situacao) || "🫥"}</div>
 
       <div className="status">
-        <Atributo emoji="❤️" valor={saude}></Atributo>
-        <Atributo emoji="🍖" valor={comida}></Atributo>
-        <Atributo emoji2="🛡️" valor={escudo}></Atributo> 
+        <Atributo emoji="❤️" valor={saude} />
+        <Atributo emoji="🍖" valor={comida} />
+        <Atributo emoji2="🛡️" valor={escudo} /> 
+        <Atributo emoji3={bolaLaranja ? "🟠" : ""} valor={1} />
       </div>
 
       <div className="acoes">
@@ -78,29 +81,22 @@ function onArmaduraClick(index: number) {
         <button onClick={onExplorar}>Explorar</button>
       </div>
 
-     
       <div className="inventario">
         {IMAGENS1.map((img, i) => (
-          <div
-            key={i}
-            className={`slot ${armadura[i] ? "ativo" : ""}`} 
-            onClick={() => onArmaduraClick(i)} 
-          >
+          <div key={i} className={`slot ${armadura[i] ? "ativo" : ""}`} onClick={() => onArmaduraClick(i)}>
             <img src={img} alt={`Escudo ${i + 1}`} />
           </div>
         ))}
       </div>
 
-      {/* Inventário 2 - 5 Slots */}
       <div className="inventario2">
         {IMAGENS2.map((img, i) => (
-          <div key={i} className="slot">
+          <div key={i} className={`slot ${i === 0 && bolaLaranja ? "ativo" : ""}`} onClick={i === 0 ? onBolaLaranjaClick : undefined}>
             <img src={img} alt={`Item ${i + 1}`} />
           </div>
         ))}
       </div>
 
-      {/* Inventário 3 - 5 Slots */}
       <div className="inventario3">
         {IMAGENS3.map((img, i) => (
           <div key={i} className="slot">
