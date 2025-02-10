@@ -10,7 +10,7 @@ const STEVES = new Map<string, string>([
 
 const IMAGENS1 = ["/assets/escudo.png", "/assets/escudo.png", "/assets/escudo.png", "/assets/escudo.png"];
 const IMAGENS2 = ["/assets/bola.png", "/assets/escudo.png", "/assets/peitoral.png", "/assets/espada.png", "/assets/maca.png"];
-const IMAGENS3 = ["/assets/escudo.png", "/assets/peitoral.png", "/assets/espada.png", "/assets/maca.png", "/assets/escudo.png"];
+const IMAGENS3 = ["/assets/escudo.png", "/assets/peitoral.png", "/assets/espada.png", "/assets/maca.png", "/assets/escudo.png"]; // slot 3, com 5 itens
 
 function Steve() {
   const [situacao, setSituacao] = useState("happy");
@@ -18,7 +18,8 @@ function Steve() {
   const [comida, setComida] = useState(3);
   const [escudo, setEscudo] = useState(0);
   const [armadura, setArmadura] = useState([false, false, false, false]);
-  const [bolaLaranja, setBolaLaranja] = useState(false); 
+  const [totem, setTotem] = useState(false);
+
 
   function onAlimentar() {
     setComida((prevComida) => {
@@ -35,10 +36,10 @@ function Steve() {
       setSaude((prevSaude) => {
         const novaSaude = Math.max(0, prevSaude - 1);
 
-        if (novaSaude === 0 && bolaLaranja) {
-          setBolaLaranja(false); 
-          setSituacao("happy"); // ✅ Steve volta a ficar "happy" ao reviver
-          return 5; 
+        if (novaSaude === 0 && totem) {
+          setTotem(false);
+          setSituacao("happy"); 
+          return 5;
         }
 
         return novaSaude;
@@ -61,19 +62,22 @@ function Steve() {
     });
   }
 
-  function onBolaLaranjaClick() {
-    setBolaLaranja((prev) => !prev);
+  function onTotemClick() {
+    setTotem((prev) => !prev);
   }
+
+ 
 
   return (
     <div className="steve">
       <div className="situacao">{STEVES.get(situacao) || "🫥"}</div>
 
       <div className="status">
-        <Atributo emoji="❤️" valor={saude} />
+        <Atributo emoji="❤️" valor={saude}/>
         <Atributo emoji="🍖" valor={comida} />
-        <Atributo emoji2="🛡️" valor={escudo} /> 
-        <Atributo emoji3={bolaLaranja ? "🟠" : ""} valor={1} />
+        <Atributo emoji2="🛡️" valor={escudo} />
+        <Atributo emoji3={totem ? "🟠" : ""} valor={1} />
+       
       </div>
 
       <div className="acoes">
@@ -84,26 +88,22 @@ function Steve() {
       <div className="inventario">
         {IMAGENS1.map((img, i) => (
           <div key={i} className={`slot ${armadura[i] ? "ativo" : ""}`} onClick={() => onArmaduraClick(i)}>
-            <img src={img} alt={`Escudo ${i + 1}`} />
+            <img src={img} />
           </div>
         ))}
       </div>
 
       <div className="inventario2">
         {IMAGENS2.map((img, i) => (
-          <div key={i} className={`slot ${i === 0 && bolaLaranja ? "ativo" : ""}`} onClick={i === 0 ? onBolaLaranjaClick : undefined}>
-            <img src={img} alt={`Item ${i + 1}`} />
+          <div key={i} className={`slot ${i === 0 && totem ? "ativo" : ""}`} onClick={i === 0 ? onTotemClick : undefined}>
+            <img src={img} />
           </div>
         ))}
       </div>
 
-      <div className="inventario3">
-        {IMAGENS3.map((img, i) => (
-          <div key={i} className="slot">
-            <img src={img} alt={`Item ${i + 1}`} />
-          </div>
-        ))}
-      </div>
+      
+
+      
     </div>
   );
 }
